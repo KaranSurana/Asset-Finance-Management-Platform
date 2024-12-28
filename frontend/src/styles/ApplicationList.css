@@ -1,0 +1,64 @@
+.application-list {
+    padding: 20px;
+    background-color: #f4f4f9;
+    min-height: 100vh;
+  }
+  
+  .application-list h1 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .create-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-size: 1em;
+    border-radius: 5px;
+  }
+  
+  .create-button:hover {
+    background-color: #45a049;
+  }
+  
+  .application-list-ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .application-item {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .application-item strong {
+    color: #333;
+  }
+  
+  .application-item p {
+    margin: 5px 0;
+    color: #555;
+  }
+  
+  .logout-button {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+    border-radius: 5px;
+  }
+  
+  .logout-button:hover {
+    background-color: #d32f2f;
+  }
+  
