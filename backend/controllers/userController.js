@@ -20,6 +20,23 @@ exports.register = async (req, res) => {
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
     console.error(`Something Went Wrong: ${error}`);
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {    
+    const user = await User.findOne({ email: req.body.email });
+    
+    if (user && user.password === req.body.password) {
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      return res.json({ token });
+    } else {
+      console.log("Invalid Credentials.");
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+  } catch (error) {
+    console.error(`Something Went Wrong: ${error}`);
+    return res.status(400).json({ error: error.message });
   }
 };
