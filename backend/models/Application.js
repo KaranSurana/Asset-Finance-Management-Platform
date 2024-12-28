@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
+  _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   personalDetails: {
     name: String,
     address: String,
@@ -12,7 +14,7 @@ const applicationSchema = new mongoose.Schema({
     assets: String,
     liabilities: String
   },
-  _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Application', applicationSchema);
