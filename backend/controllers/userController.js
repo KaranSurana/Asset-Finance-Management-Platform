@@ -1,5 +1,6 @@
 const User = require('../models/User');
 
+//register controller function
 exports.register = async (req, res) => {
   try {
     const { email, password, name } = req.body;
@@ -24,6 +25,7 @@ exports.register = async (req, res) => {
   }
 };
 
+//login controller function
 exports.login = async (req, res) => {
   try {    
     const user = await User.findOne({ email: req.body.email });
