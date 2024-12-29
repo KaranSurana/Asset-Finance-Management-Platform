@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'UserXZ'},
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'AA'},
   personalDetails: {
     name: String,
     address: String,
@@ -17,4 +17,4 @@ const applicationSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('ApplicationXZ', applicationSchema);
+module.exports = mongoose.model('BB', applicationSchema);
