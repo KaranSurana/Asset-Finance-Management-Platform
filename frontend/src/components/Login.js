@@ -42,7 +42,7 @@ const Login = () => {
 
   return (
     <div className="auth-container">
-      <h1>Login</h1>
+      <h1>Logsn</h1>
       <form onSubmit={handleSubmit} className="auth-form">
         <input
           type="email"
