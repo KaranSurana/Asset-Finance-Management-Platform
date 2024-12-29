@@ -1,38 +1,50 @@
-name: Frontend CI/CD Pipeline
+name: Frontend CI/CD
 
 on:
   push:
     branches:
-      - main
+      - v1
+    paths:
+      - 'frontend/**'
+  workflow_dispatch:
 
 jobs:
-  build:
-    name: Frontend Build and Deploy
+  build-and-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: './frontend/package-lock.json'
 
       - name: Install dependencies
-        run: |
-          cd frontend
-          npm install
+        run: npm ci
 
-      - name: Build frontend
-        run: |
-          cd frontend
-          npm run build
+      - name: Build
+        run: npm run build
 
-      - name: Deploy to AWS S3 + CloudFront
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-2
+
+      - name: Deploy to S3
         run: |
-          cd frontend
-          aws s3 sync build/* s3://your-s3-bucket-name --delete
-          aws cloudfront create-invalidation --distribution-id your-distribution-id --paths "/*"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws s3 sync build/ s3://afmp-frontend-bucket --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E29JPZ3XZE2L2T \
+            --paths "/*"
