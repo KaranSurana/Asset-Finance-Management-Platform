@@ -3,7 +3,7 @@ name: Deploy to AWS Lambda
 on:
   push:
     branches:
-      - main
+      - v1
 
 jobs:
   deploy:
@@ -18,11 +18,14 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Navigate to Backend Directory
+        run: cd backend  # This will navigate into the backend directory
+
       - name: Install Dependencies
-        run: npm install
+        run: npm install  # Install dependencies in the backend directory
 
       - name: Zip Code for Deployment
-        run: zip -r deployment_package.zip . -x "*.git*" "node_modules/*"
+        run: zip -r ../deployment_package.zip . -x "*.git*" "node_modules/*"  # Zip the backend folder for deployment, but store it at the root
 
       - name: Deploy to AWS Lambda
         uses: aws-actions/aws-lambda-deploy@v1
@@ -31,4 +34,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
           function-name: ${{ secrets.LAMBDA_FUNCTION_NAME }}
-          zip-file: deployment_package.zip
+          zip-file: deployment_package.zip  # Reference the zipped package for Lambda deployment
