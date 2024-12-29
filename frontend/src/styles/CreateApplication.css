@@ -1,0 +1,71 @@
+.create-application-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Center vertically and horizontally */
+    background-color: #f9fafc;
+  }
+  
+  .create-application-form {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Larger form width */
+  }
+  
+  .create-application-form h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .create-application-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .create-application-form input {
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .create-application-form input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+  
+  .form-buttons .back-button {
+    background: #6c757d;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-buttons .submit-button {
+    background: #4caf50;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-buttons .back-button:hover {
+    background: #5a6268;
+  }
+  
+  .form-buttons .submit-button:hover {
+    background: #0056b3;
+  }
+  

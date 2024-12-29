@@ -3,22 +3,25 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import EditApplicationModal from './EditApplicationModal';
 import '../styles/ApplicationList.css';
+import config from '../config';
 
 const ApplicationList = () => {
   const [applications, setApplications] = useState([]);
   const [editingApplication, setEditingApplication] = useState(null);
   const navigate = useNavigate();
 
+  //getting all applications
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
+      console.log("You're Not Logged In");
       navigate('/login');
     }
 
     const fetchApplications = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/applications', {
-          headers: {
+        const response = await axios.get(`${config.API_URL}/applications`,{
+        headers: {
             Authorization: `Bearer ${token}`,
           },
         });
@@ -33,15 +36,18 @@ const ApplicationList = () => {
     fetchApplications();
   }, [navigate]);
 
+  //if we click on the edit button it gets the application details and set as a state for editing the application details
   const handleEdit = (application) => {
     setEditingApplication(application);
   };
 
+  // handling the update of application, passing it as a prop in edit application modal
   const handleUpdate = async (updatedData) => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `http://localhost:5000/applications/${editingApplication._id}`,
+        
+        `${config.API_URL}/applications/${editingApplication._id}`,
         updatedData,
         {
           headers: {
@@ -49,6 +55,7 @@ const ApplicationList = () => {
           },
         }
       );
+      
 
       setApplications(prev =>
         prev.map(app =>
@@ -62,15 +69,20 @@ const ApplicationList = () => {
     }
   };
 
+  // handling the deleting of application
   const handleDelete = async (applicationId) => {
     if (window.confirm('Are you sure you want to delete this application?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/applications/${applicationId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        await axios.delete(
+          `${config.API_URL}/applications/${applicationId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        
 
         setApplications(prev => prev.filter(app => app._id !== applicationId));
       } catch (error) {
@@ -80,6 +92,7 @@ const ApplicationList = () => {
     }
   };
 
+  // handling logout
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
