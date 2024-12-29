@@ -35,7 +35,7 @@ jobs:
         CI: true
 
   deploy:
-    needs: test  # This ensures deploy only runs if tests pass
+    needs: test
     runs-on: ubuntu-latest
     defaults:
       run:
