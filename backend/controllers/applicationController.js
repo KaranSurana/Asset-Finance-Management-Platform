@@ -17,9 +17,10 @@ exports.createApplication = async (req, res) => {
       financialDetails,
     });
     
-    await application.save();
+    const savedApplication = await application.save();
     
-    res.status(201).json(application);
+    const applicationData = savedApplication.toObject();
+    res.status(201).json(applicationData);
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: error.message });
