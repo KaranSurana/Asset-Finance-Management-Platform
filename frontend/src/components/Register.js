@@ -30,8 +30,10 @@ const Register = () => {
     }
 
     try {      
+      console.log(`${config.API_URL}/user/register`);
+      
       await axios.post(
-        `${config.API_URL}/register`,
+        `${config.API_URL}/user/register`,
         { name, email, password }
       );
       navigate('/login');

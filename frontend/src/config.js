@@ -1,5 +1,5 @@
 const config = {
-    API_URL: process.env.REACT_APP_API_URL || 'http://localhost:5000',
+    API_URL: "https://py7hbtq3ha76yu77qnaapqx6qy0jntaz.lambda-url.ap-southeast-2.on.aws",
   };
   
 export default config;
