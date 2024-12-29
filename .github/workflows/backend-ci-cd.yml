@@ -19,19 +19,25 @@ jobs:
           node-version: '20'
 
       - name: Navigate to Backend Directory
-        run: cd backend  # This will navigate into the backend directory
+        run: cd backend
 
       - name: Install Dependencies
-        run: npm install  # Install dependencies in the backend directory
+        run: npm install
 
       - name: Zip Code for Deployment
-        run: zip -r ../deployment_package.zip . -x "*.git*" "node_modules/*"  # Zip the backend folder for deployment, but store it at the root
+        run: zip -r ../deployment_package.zip . -x "*.git*" "node_modules/*"
 
-      - name: Deploy to AWS Lambda
-        uses: aws-actions/aws-lambda-deploy@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          function-name: ${{ secrets.LAMBDA_FUNCTION_NAME }}
-          zip-file: deployment_package.zip
+      - name: Set up AWS CLI
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+
+      - name: Deploy to AWS Lambda using AWS CLI
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
+            --zip-file fileb://deployment_package.zip \
+            --region ${{ secrets.AWS_REGION }} \
+            --access-key-id ${{ secrets.AWS_ACCESS_KEY_ID }} \
+            --secret-access-key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
