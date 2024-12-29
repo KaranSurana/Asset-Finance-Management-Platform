@@ -34,4 +34,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
           function-name: ${{ secrets.LAMBDA_FUNCTION_NAME }}
-          zip-file: deployment_package.zip  # Reference the zipped package for Lambda deployment
+          zip-file: deployment_package.zip
