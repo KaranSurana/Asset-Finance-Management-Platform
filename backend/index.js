@@ -15,7 +15,7 @@ const connectDB = require("./config/db");
 connectDB();
 
 app.get('/health', (req,res)=>{
-    res.send("Workin ");
+    res.send("Wor in ");
 });
 app.use('/user', userRoutes);
 app.use('/applications', applicationRoutes);
