@@ -1,38 +1,76 @@
-name: Frontend CI/CD Pipeline
+name: Backend CI/CD
 
 on:
   push:
-    branches:
-      - main
+    branches: [ v1]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci-cd.yml'
 
 jobs:
-  build:
-    name: Frontend Build and Deploy
+  deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: './backend/package-lock.json'
 
-      - name: Install dependencies
-        run: |
-          cd frontend
-          npm install
+    - name: Post Set up Node.js
+      run: |
+        echo "Node.js version:"
+        node --version
+        echo "npm version:"
+        npm --version
+        echo "Setting up npm config..."
+        npm config set legacy-peer-deps true
 
-      - name: Build frontend
-        run: |
-          cd frontend
-          npm run build
+    - name: Install dependencies
+      run: |
+        npm cache clean --force
+        rm -rf node_modules package-lock.json
+        npm install
 
-      - name: Deploy to AWS S3 + CloudFront
-        run: |
-          cd frontend
-          aws s3 sync build/* s3://your-s3-bucket-name --delete
-          aws cloudfront create-invalidation --distribution-id your-distribution-id --paths "/*"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Build
+      run: |
+        npm run build || {
+          echo "Build failed. Checking package.json contents:"
+          cat package.json
+          exit 1
+        }
+
+    - name: Zip artifact
+      run: zip -r ../deployment-package.zip ./*
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Deploy to Lambda
+      run: |
+        aws lambda update-function-code \
+          --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
+          --zip-file fileb://../deployment-package.zip
+
+    - name: Wait for Lambda update
+      run: |
+        aws lambda wait function-updated \
+          --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }}
+
+    - name: Update Lambda function configuration
+      run: |
+        aws lambda update-function-configuration \
+          --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
+          --handler index.handler \
+          --runtime nodejs18.x
