@@ -6,6 +6,7 @@ The **Asset Finance Management Platform** is a comprehensive application designe
 - **Frontend URL(aws)** - https://d12gtgoagbp5j.cloudfront.net/
 - **Backend URL(aws)** - https://py7hbtq3ha76yu77qnaapqx6qy0jntaz.lambda-url.ap-southeast-2.on.aws/health
                     (replace health with any api endpoints)
+- **Swagger URL(aws)** - https://py7hbtq3ha76yu77qnaapqx6qy0jntaz.lambda-url.ap-southeast-2.on.aws/api-docs
 
 ---
 
