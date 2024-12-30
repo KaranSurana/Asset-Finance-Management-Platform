@@ -82,15 +82,9 @@ The frontend is built using **React** as a Single Page Application (SPA). The fi
 - Separate components and pages into distinct directories for improved organization.
 2. **Version Control Improvements**:
 - Use Git branching to separate features into dedicated branches.
-3. **Logging and Monitoring**:
-- Replace console logs with the **Winston** package for advanced logging and monitoring.
-4. **Admin Functionality**:
+3. **Admin Functionality**:
 - Add an admin view to allow approval or rejection of applications created by users.
 
----
-
-## Deployment & CI/CD
-- Documentation for deployment and CI/CD pipelines is included to ensure a seamless deployment process.
 
 ---
 
