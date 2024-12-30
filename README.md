@@ -8,11 +8,19 @@ The **Asset Finance Management Platform** is a comprehensive application designe
                     (replace health with any api endpoints)
 - **Swagger URL(aws)** - https://py7hbtq3ha76yu77qnaapqx6qy0jntaz.lambda-url.ap-southeast-2.on.aws/api-docs
 
+Tasks Attempted
+
+- Frontend: Completed Entirely ✅
+- Backend: Completed Entirely ✅
+- DB: Completed Entirely ✅
+- Additional Considerations: Completed Entirely ✅
+- Deliverables: Completed Entirely ✅
+- Bonus: Completed Entirely ✅
+
 ---
 
-## **To set up the project locally, follow the instructions provided below after the implementation details.**
+## **To set up the project locally, follow the instructions provided below, after the implementation details.**
 
----
 
 ## Backend Implementation
 
@@ -48,14 +56,17 @@ The frontend is built using **React** as a Single Page Application (SPA). The fi
   - **index.js**: The entry point for the React application.
 
 ### Features
-- Segregated logic into appropriate components for modularity.
-
+1.  Segregated logic into appropriate components for modularity.
+2. **Logging and Monitoring**: Added throughout the application to report specific issues or errors during the running of the application.    
+    - Logging: Logs are visible in CloudWatch Logs, allowing for detailed tracking of application activity and errors.
+    - Monitoring: CloudWatch Metrics are visible for tracking Lambda performance (e.g. Invocations, Errors, and Duration).
 ---
 
-## Features Added
+## Additional Features/Enhancements Added
+
 1. **Login/Register Functionality**: Ensures that only authenticated users can view and manage their applications.
-2. **Logging and Monitoring**: Added throughout the application to report specific issues or errors during the running of the application.
-3. **Commit Structure**:
+
+2. **Commit Structure**:
    - Commit messages follow a structured format:
      - **Feature**: Prefix.
      - **Feature Name**: Matches the assessment task deliverable (e.g., DB, Frontend, Bonus).
