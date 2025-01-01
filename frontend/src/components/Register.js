@@ -29,20 +29,22 @@ const Register = () => {
       return;
     }
 
-    try {            
-      await axios.post(
+    try {                  
+      const response = await axios.post(
         `${config.API_URL}/user/register`,
         { name, email, password }
       );
-      navigate('/login');
+      localStorage.setItem('token', response.data.token);
+      navigate('/');
     } catch (err) {
-      setError('Registration failed');
+      setError(err.response.data.error);
       console.error('Failed to register', err);
     }
   };
 
   return (
     <div className="auth-container">
+        <div className="auth-card">
       <h1>Register</h1>
       <form onSubmit={handleSubmit} className="auth-form">
         <input
@@ -76,9 +78,10 @@ const Register = () => {
         {error && <p className="error">{error}</p>}
         <button type="submit">Register</button>
       </form>
-      <p>
+      <div className="register-link">
         Already have an account? <Link to="/login">Login here</Link>
-      </p>
+     </div>
+      </div>
     </div>
   );
 };

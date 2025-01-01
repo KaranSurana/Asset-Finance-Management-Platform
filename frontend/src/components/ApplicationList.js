@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import EditApplicationModal from './EditApplicationModal';
 import '../styles/ApplicationList.css';
 import config from '../config';
+import { Calendar, Clock } from 'lucide-react';
 
 const ApplicationList = () => {
   const [applications, setApplications] = useState([]);
@@ -98,53 +99,92 @@ const ApplicationList = () => {
     navigate('/login');
   };
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const formatTime = (dateString) => {
+    return new Date(dateString).toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   return (
     <div className="application-list">
-      <h1>Applications</h1>
-      <button onClick={() => navigate('/applications/create')} className="create-button">
-        Create Application
-      </button>
-      <button onClick={handleLogout} className="logout-button">
-        Logout
-      </button>
+      <div className="header-container">
+        <h1 className="dashboard-title">Dashboard</h1>
+        <div className="navbar">
+          <button onClick={handleLogout} className="nav-button logout-button">Logout</button>
+        </div>
+      </div>
+      <div className="action-buttons">
+        <button onClick={() => navigate('/applications/create')} className="create-button">
+          Create Application
+        </button>
+      </div>
       {applications.length === 0 ? (
-        <p>No applications found</p>
+        <p className="no-applications">No applications found</p>
       ) : (
         <ul className="application-list-ul">
           {applications.map((app) => (
             <li key={app._id} className="application-item">
-              {Object.entries(app.personalDetails || {}).map(([key, value]) => (
-                <p key={key}>
-                  <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value}
-                </p>
-              ))}
-              {Object.entries(app.financialDetails || {}).map(([key, value]) => (
-                <p key={key}>
-                  <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value}
-                </p>
-              ))}
-              <p>
-                <strong>Created At:</strong> {new Date(app.createdAt).toLocaleTimeString()}{" "}
-                {new Date(app.createdAt).toLocaleDateString()}
-              </p>
-              <div className="application-actions">
-                <button onClick={() => handleEdit(app)} className="edit-button">
-                  Edit
-                </button>
-                <button onClick={() => handleDelete(app._id)} className="delete-button">
-                  Delete
-                </button>
+              <div className="application-header">
+                <div className="application-meta">
+                  <div className="meta-item">
+                    <Calendar size={14} />
+                    <span>{formatDate(app.createdAt)}</span>
+                  </div>
+                  <div className="meta-item">
+                    <Clock size={14} />
+                    <span>{formatTime(app.createdAt)}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="application-content">
+                <div className="details-section">
+                  <h3>Personal Details</h3>
+                  {Object.entries(app.personalDetails || {}).map(([key, value]) => (
+                    <div key={key} className="detail-item">
+                      <span className="detail-label">{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                      <span className="detail-value">{value}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                {app.financialDetails && (
+                  <div className="details-section">
+                    <h3>Financial Details</h3>
+                    {Object.entries(app.financialDetails).map(([key, value]) => (
+                      <div key={key} className="detail-item">
+                        <span className="detail-label">{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                        <span className="detail-value">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="button-group">
+                <button className="edit-button" onClick={() => handleEdit(app)}>Edit</button>
+                <button className="delete-button" onClick={() => handleDelete(app._id)}>Delete</button>
               </div>
             </li>
           ))}
         </ul>
       )}
+
       {editingApplication && (
         <EditApplicationModal
-          application={editingApplication}
-          onClose={() => setEditingApplication(null)}
-          onSubmit={handleUpdate}
-        />
+        application={editingApplication}
+        onClose={() => setEditingApplication(null)}
+        onSubmit={handleUpdate}
+      />
       )}
     </div>
   );

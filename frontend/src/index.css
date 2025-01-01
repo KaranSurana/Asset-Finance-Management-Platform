@@ -1,4 +1,33 @@
-body {
-  font-family: Arial, sans-serif;
+:root {
+  --color-primary: #6ee7b7;
+  --color-primary-hover: #34d399;
+  
+  --color-bg-main: #000000;
+  --color-bg-card: #171717;
+  --color-bg-input: #262626;
+  
+  --color-border: #404040;
+  --color-border-focus: var(--color-primary);
+  
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a3a3a3;
+  --color-text-placeholder: #737373;
+  --color-text-button: #000000;
+  --color-text-error: #ef4444;
+  
+  --color-shadow: rgba(0, 0, 0, 0.25);
+  --color-navbar-bg: #111827;  
+  --color-navbar-border: #1f2937;
+  --color-overlay: rgba(0, 0, 0, 0.7);
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Kumbh Sans', sans-serif;
+}
+
+body{
+  background-color: var(--color-bg-main);
+}

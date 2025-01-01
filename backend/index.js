@@ -27,9 +27,9 @@ app.use('/user', userRoutes);
 
 app.use('/applications', applicationRoutes);
 
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT,  () => {
-//     console.log(`Server is running on port ${PORT}`);
-// });
+const PORT = process.env.PORT || 5000;
+app.listen(PORT,  () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
 module.exports.handler = serverless(app)

@@ -24,8 +24,14 @@ const EditApplicationModal = ({ application, onClose, onSubmit }) => {
     onSubmit(formData);
   };
 
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay" onClick={handleOverlayClick}>
       <div className="modal-content">
         <h2>Edit Application</h2>
         <form onSubmit={handleSubmit}>
@@ -33,11 +39,12 @@ const EditApplicationModal = ({ application, onClose, onSubmit }) => {
             <h3>Personal Details</h3>
             {Object.entries(formData.personalDetails).map(([field, value]) => (
               <div key={field} className="form-group">
-                <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+                <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                 <input
                   type="text"
                   value={value}
                   onChange={(e) => handleChange('personalDetails', field, e.target.value)}
+                  autoComplete="off"
                 />
               </div>
             ))}
@@ -47,19 +54,24 @@ const EditApplicationModal = ({ application, onClose, onSubmit }) => {
             <h3>Financial Details</h3>
             {Object.entries(formData.financialDetails).map(([field, value]) => (
               <div key={field} className="form-group">
-                <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+                <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                 <input
                   type={field === 'income' || field === 'expenses' ? 'number' : 'text'}
                   value={value}
                   onChange={(e) => handleChange('financialDetails', field, e.target.value)}
+                  autoComplete="off"
                 />
               </div>
             ))}
           </div>
 
           <div className="modal-buttons">
-            <button type="submit" className="save-button">Save Changes</button>
-            <button type="button" onClick={onClose} className="cancel-button">Cancel</button>
+            <button type="button" onClick={onClose} className="cancel-button">
+              Cancel
+            </button>
+            <button type="submit" className="save-button">
+              Save Changes
+            </button>
           </div>
         </form>
       </div>

@@ -5,14 +5,25 @@ import '../styles/CreateApplication.css';
 import config from '../config';
 
 const CreateApplication = () => {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
-  const [income, setIncome] = useState('');
-  const [expenses, setExpenses] = useState('');
-  const [assets, setAssets] = useState('');
-  const [liabilities, setLiabilities] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    address: '',
+    phone: '',
+    income: '',
+    expenses: '',
+    assets: '',
+    liabilities: ''
+  });
+
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   // handling the creation of application
   const handleSubmit = async (e) => {
@@ -29,15 +40,15 @@ const CreateApplication = () => {
         `${config.API_URL}/applications`,
         {
           personalDetails: {
-            name,
-            address,
-            phone,
+            name: formData.name,
+            address: formData.address,
+            phone: formData.phone,
           },
           financialDetails: {
-            income,
-            expenses,
-            assets,
-            liabilities,
+            income: formData.income,
+            expenses: formData.expenses,
+            assets: formData.assets,
+            liabilities: formData.liabilities,
           },
         },
         {
@@ -58,55 +69,84 @@ const CreateApplication = () => {
       <div className="create-application-form">
         <h1>Create Application</h1>
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Income"
-            value={income}
-            onChange={(e) => setIncome(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Expenses"
-            value={expenses}
-            onChange={(e) => setExpenses(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Assets"
-            value={assets}
-            onChange={(e) => setAssets(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Liabilities"
-            value={liabilities}
-            onChange={(e) => setLiabilities(e.target.value)}
-            required
-          />
+          <div className="form-section">
+            <h3>Personal Details</h3>
+            <div className="form-group">
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                name="address"
+                placeholder="Address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                name="phone"
+                placeholder="Phone"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-section">
+            <h3>Financial Details</h3>
+            <div className="form-group">
+              <input
+                type="number"
+                name="income"
+                placeholder="Income"
+                value={formData.income}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="number"
+                name="expenses"
+                placeholder="Expenses"
+                value={formData.expenses}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                name="assets"
+                placeholder="Assets"
+                value={formData.assets}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                name="liabilities"
+                placeholder="Liabilities"
+                value={formData.liabilities}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          
           <div className="form-buttons">
             <button type="button" onClick={() => navigate('/')} className="back-button">
               Back
