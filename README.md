@@ -108,12 +108,6 @@ The frontend is built using **React** as a Single Page Application (SPA). The fi
     ```bash
     cd backend
     ```
-
-3.  Install dependencies:
-
-    ```bash
-    npm install
-    ```
     
 3.  Uncomment the code in index.js:
 
