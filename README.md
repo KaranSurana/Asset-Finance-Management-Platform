@@ -114,8 +114,15 @@ The frontend is built using **React** as a Single Page Application (SPA). The fi
     ```bash
     npm install
     ```
+    
+3.  Uncomment the code in index.js:
 
-4.  Start the backend server:
+4.  Install dependencies:
+
+    ```bash
+    npm install
+    ```
+5.  Start the backend server:
 
     ```bash
     npm start
@@ -129,13 +136,15 @@ The frontend is built using **React** as a Single Page Application (SPA). The fi
     cd frontend
     ```
 
-2.  Install dependencies:
+2.  Update the API_URL in src/config.js to http://localhost:5000
+
+3.  Install dependencies:
 
     ```bash
     npm install
     ```
 
-3.  Start the frontend application:
+4.  Start the frontend application:
 
     ```bash
     npm start
