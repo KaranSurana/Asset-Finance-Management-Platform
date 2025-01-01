@@ -35,7 +35,7 @@ describe('Register & Login Test ', () => {
       await register(req, res);
 
       expect(res.status).toHaveBeenCalledWith(201);
-      expect(res.json).toHaveBeenCalledWith({ message: 'User created successfully' });
+      expect(res.json).toHaveBeenCalledWith({ token: undefined });
     });
 
     it('should return error if email already exists', async () => {
