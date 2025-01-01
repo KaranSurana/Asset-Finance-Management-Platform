@@ -28,7 +28,7 @@
 2. Named the bucket and enabled public access to allow users to access the frontend application.
 
 ### Frontend Build and Upload:
-1. Updated the backend URL in the `config.js` file.
+1. Updated the backend URL in the `config.js` file after deploying the backend.
 2. Built the frontend application.
 3. Uploaded the build version to the S3 bucket.
 
