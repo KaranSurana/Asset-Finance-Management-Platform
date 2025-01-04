@@ -57,7 +57,7 @@ const CreateApplication = () => {
           },
         }
       );
-      
+
       navigate('/');
     } catch (error) {
       console.error('Failed to create application', error);
@@ -105,46 +105,41 @@ const CreateApplication = () => {
 
           <div className="form-section">
             <h3>Financial Details</h3>
-            <div className="form-group">
-              <input
-                type="number"
-                name="income"
-                placeholder="Income"
-                value={formData.income}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="number"
-                name="expenses"
-                placeholder="Expenses"
-                value={formData.expenses}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                name="assets"
-                placeholder="Assets"
-                value={formData.assets}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="text"
-                name="liabilities"
-                placeholder="Liabilities"
-                value={formData.liabilities}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            {["income", "expenses", "assets", "liabilities"].map((field) => (
+              <div className="form-group" key={field}>
+                <div className="input-container">
+                  <input
+                    type={field === "income" || field === "expenses" ? "number" : "text"}
+                    name={field}
+                    placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    required
+                  />
+                  <span
+                    className="info-icon"
+                    onClick={(e) => {
+                      const tooltip = e.target.nextSibling;
+                      tooltip.style.display =
+                        tooltip.style.display === "block" ? "none" : "block";
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.nextSibling.style.display = "block";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.nextSibling.style.display = "none";
+                    }}
+                  >
+                    i
+                  </span>
+                  <div className="tooltip">
+                    {field === "income" || field === "expenses"
+                      ? "Accepts numbers only"
+                      : "Accepts text and numbers"}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
           
           <div className="form-buttons">
@@ -159,6 +154,6 @@ const CreateApplication = () => {
       </div>
     </div>
   );
-};
+}
 
 export default CreateApplication;
